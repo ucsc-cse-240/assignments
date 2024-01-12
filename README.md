@@ -2,6 +2,9 @@
 These are the assignments for CSE240 at UCSC.  They are:
 - [Assignment1](Assignment1/)
 
+# Installing the Autograder package
+Install the autograder with `pip3 install autograder-py` on the command line.  
+
 # Submitting and using the Autograder in CSE 240
 
 Make sure that the autograder is installed on your local machine by
@@ -18,10 +21,8 @@ Invoke each command with the `--help` option for more details.
 The autograder command line interface (cli) is [documented](https://github.com/eriq-augustine/autograder-py).  As a
 student in the class, the main commands you will use are:
 
--   `python3 -m autograder.cli.submit`: this will submit an assignment
+-   `python3 -m autograder.cli.submission.submit`: this will submit an assignment
     for a particular class and assignment.
--   `python3 -m autograder.cli.peek`: this will show you your last submission
--   `python3 -m autograder.cli.history`: this will show a summary of all
+-   `python3 -m autograder.cli.submission.peek`: this will show you your last submission
+-   `python3 -m autograder.cli.submission.history`: this will show a summary of all
     your past submission
--   `python3 -m autograder.cli.style`: this will check the style of a
-    particular assignment.
