@@ -6,6 +6,12 @@ import tkinter as tk
 # 3rd party libs
 import numpy as np
 
+# Old versions of numpy want np.int, new versions raise an exception so we hack around this here
+try:
+    np.int
+except AttributeError:
+    np.int = int
+
 # Local libs
 from Player import AIPlayer, RandomPlayer, HumanPlayer
 
