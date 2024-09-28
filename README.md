@@ -15,6 +15,7 @@ typing: `python3 -m autograder.cli`.  If you see the `--help` option:
 
 ```nil
 python -m autograder.cli
+python -m autograder.cli
 The autograder CLI package contains several tools for interacting with the autograder.
 The following is a non-exhaustive list of CLI tools.
 Invoke each command with the `--help` option for more details.
@@ -24,8 +25,8 @@ Invoke each command with the `--help` option for more details.
 The autograder command line interface (cli) is [documented](https://github.com/eriq-augustine/autograder-py).  As a
 student in the class, the main commands you will use are:
 
--   `python3 -m autograder.cli.submission.submit`: this will submit an assignment
+-   `python3 -m autograder.run.submit`: this will submit an assignment
     for a particular class and assignment.
--   `python3 -m autograder.cli.submission.peek`: this will show you your last submission
--   `python3 -m autograder.cli.submission.history`: this will show a summary of all
+-   `python3 -m autograder.run.peek`: this will show you your last submission
+-   `python3 -m autograder.run.history`: this will show a summary of all
     your past submission
