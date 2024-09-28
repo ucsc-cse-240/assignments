@@ -15,7 +15,6 @@ typing: `python3 -m autograder.cli`.  If you see the `--help` option:
 
 ```nil
 python -m autograder.cli
-python -m autograder.cli
 The autograder CLI package contains several tools for interacting with the autograder.
 The following is a non-exhaustive list of CLI tools.
 Invoke each command with the `--help` option for more details.
