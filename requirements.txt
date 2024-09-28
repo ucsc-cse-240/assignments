@@ -1,1 +1,5 @@
-autograder-py>=0.4.0
+jupyterlab>=3.5.0
+numpy>=1.22.3
+plotly>=5.18.0
+chess>=1.10
+autograder-py==0.5.*
