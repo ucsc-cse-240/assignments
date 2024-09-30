@@ -1,7 +1,7 @@
 # Assignments
 These are the assignments for CSE240 at UCSC.  They are:
 - [Assignment1](Assignment1/)
-- [Assignment2](Assignment2/) (NOTE: Assignment2 will be submitted to CANVAS not the autograder).
+- [Assignment2](Assignment2/) 
 - [Assignment3](Assignment3/)
 - [Assignment4](Assignment4/)
   
