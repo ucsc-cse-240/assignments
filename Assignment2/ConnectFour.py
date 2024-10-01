@@ -6,6 +6,12 @@ import tkinter as tk
 # 3rd party libs
 import numpy as np
 
+# Old versions of numpy want np.int, new versions raise an exception so we hack around this here
+try:
+    np.int
+except AttributeError:
+    np.int = int
+
 # Local libs
 from Player import AIPlayer, RandomPlayer, HumanPlayer
 
@@ -22,14 +28,17 @@ class Game:
         self.board = np.zeros([6,7]).astype(np.uint8)
         self.gui_board = []
         self.game_over = False
+        self.run_to_end = False
         self.ai_turn_limit = time
 
+        self.human_move = None
+
         #https://stackoverflow.com/a/38159672
-        root = tk.Tk()
-        root.title('Connect 4')
-        self.player_string = tk.Label(root, text=player1.player_string)
+        self.root = tk.Tk()
+        self.root.title('Connect 4')
+        self.player_string = tk.Label(self.root, text=player1.player_string)
         self.player_string.pack()
-        self.c = tk.Canvas(root, width=700, height=600)
+        self.c = tk.Canvas(self.root, width=700, height=600)
         self.c.pack()
 
         for row in range(0, 700, 100):
@@ -38,9 +47,45 @@ class Game:
                 column.append(self.c.create_oval(row, col, row+100, col+100, fill=''))
             self.gui_board.append(column)
 
-        tk.Button(root, text='Next Move', command=self.make_move).pack()
+        self.c.bind("<Button-1>", self.canvas_click)
 
-        root.mainloop()
+        self.b_next_move = tk.Button(self.root, text='Next Move', command=self.make_move)
+        self.b_finish = tk.Button(self.root, text='Finish Game', command=self.finish_game)
+        self.b_reset = tk.Button(self.root, text='Reset Game', command=self.reset_game)
+
+        self.b_next_move.pack()
+        if player1.type != 'human' and player2.type != 'human':
+            self.b_finish.pack()
+        self.b_reset.pack()
+
+        self.root.mainloop()
+
+    def canvas_click(self, e):
+        if self.human_move == "move_me":
+            # Select the column based on the x value of the mouse click
+            self.human_move = e.x//100
+            self.make_move()
+
+    def reset_game(self):
+        self.current_turn = 0
+        self.current_turn = 0
+        self.game_over = False
+        self.run_to_end = False
+        self.human_move = None
+
+        self.board = np.zeros([6,7]).astype(np.uint8)
+        for i in self.gui_board:
+            for j in i:
+                self.c.itemconfig(j, fill='')
+        self.b_next_move["state"] = "normal"
+        self.b_finish["state"] = "normal"
+        self.b_reset["state"] = "normal"
+
+    def finish_game(self):
+        self.run_to_end = True
+        self.b_next_move["state"] = "disabled"
+        self.b_finish["state"] = "disabled"
+        self.make_move()
 
     def make_move(self):
         if not self.game_over:
@@ -67,6 +112,16 @@ class Game:
                     raise Exception('Game Over')
 
                 move = recv_end.recv()
+            elif current_player.type == 'human':
+                if isinstance(self.human_move, int):
+                    move = self.human_move
+                    # Disable the canvas click event
+                    self.human_move = None
+                else:
+                    # Enable the canvas click event
+                    self.human_move = "move_me"
+                    self.player_string.configure(text='Click a column to select the move for ' + self.players[self.current_turn].player_string)
+                    return
             else:
                 move = current_player.get_move(self.board)
 
@@ -75,10 +130,19 @@ class Game:
 
             if self.game_completed(current_player.player_number):
                 self.game_over = True
+                self.run_to_end = False
                 self.player_string.configure(text=self.players[self.current_turn].player_string + ' wins!')
             else:
                 self.current_turn = int(not self.current_turn)
                 self.player_string.configure(text=self.players[self.current_turn].player_string)
+
+        if self.game_over:
+            self.b_next_move["state"] = "disabled"
+            self.b_finish["state"] = "disabled"
+            self.b_reset["state"] = "normal"
+
+        if self.run_to_end and not self.game_over:
+            self.root.after(1, self.make_move)
 
     def update_board(self, move, player_num):
         if 0 in self.board[:,move]:
