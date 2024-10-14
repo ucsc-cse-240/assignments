@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Environment variables file
+.env
+.venv/
+env/
+ENV/
+venv/
+
+# Python virtual environment
+*.pyenv
+
+# Jupyter Notebook config
+.jupyter/
+
+# VS Code configuration files
+.vscode/
+
+# Logs
+*.log
+
+# MacOS generated files
+.DS_Store
+
+# assignment 1 config.json
+Assignment1/config.json
