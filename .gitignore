@@ -31,6 +31,6 @@ venv/
 # MacOS generated files
 .DS_Store
 
-# assignment 1 config.json
+#config.json
 Assignment1/config.json
-Assignment1/config.json
+Assignment2/config.json
