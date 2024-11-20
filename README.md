@@ -4,6 +4,7 @@ These are the assignments for CSE240 at UCSC.  They are:
 - [Assignment2](Assignment2/) 
 - [Assignment3](Assignment3/)
 - [Assignment4](Assignment4/)
+- [Assignment5](Assignment5/)
   
 # Installing the Autograder package
 Install the autograder with `pip3 install autograder-py` on the command line.  
