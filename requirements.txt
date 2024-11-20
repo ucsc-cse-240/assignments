@@ -3,3 +3,4 @@ numpy>=1.22.3
 plotly>=5.18.0
 chess>=1.10
 autograder-py==0.5.*
+pygame>=2.5.2
