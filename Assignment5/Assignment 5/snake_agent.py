@@ -1,22 +1,27 @@
 import numpy as np
 import helper
 import random
+from typing import List
 
-#   This class has all the functions and variables necessary to implement snake game
-#   We will be using Q learning to do this
 
 class SnakeAgent:
+    """
+    This class has all the functions and variables necessary to implement the snake game.
+    We will be using Q-learning to do this.
+    """
 
-    #   This is the constructor for the SnakeAgent class
-    #   It initializes the actions that can be made,
-    #   Ne which is a parameter helpful to perform exploration before deciding next action,
-    #   LPC which ia parameter helpful in calculating learning rate (lr) 
-    #   gamma which is another parameter helpful in calculating next move, in other words  
-    #            gamma is used to blalance immediate and future reward
-    #   Q is the q-table used in Q-learning
-    #   N is the next state used to explore possible moves and decide the best one before updating
-    #           the q-table
-    def __init__(self, actions, Ne, LPC, gamma):
+    def __init__(self, actions: List, Ne: int, LPC: int, gamma: float):
+        """
+        This is the constructor for the SnakeAgent class.
+        It initializes the actions that can be made,
+        Ne - a parameter helpful to perform exploration before deciding the next action,
+        LPC - a parameter helpful in calculating the learning rate (lr),
+        gamma - a parameter helpful in calculating the next move, in other words,
+            gamma is used to balance immediate and future rewards,
+        Q - the Q-table used in Q-learning,
+        N - the next state used to explore possible moves and decide the best one before
+            updating the Q-table.
+        """
         self.actions = actions
         self.Ne = Ne
         self.LPC = LPC
@@ -28,37 +33,39 @@ class SnakeAgent:
         self.N = helper.initialize_q_as_zeros()
 
 
-    #   This function sets if the program is in training mode or testing mode.
     def set_train(self):
+        """ Sets the program into training mode."""
         self._train = True
 
-     #   This function sets if the program is in training mode or testing mode.       
     def set_eval(self):
+        """ Sets the program into testing mode. """
         self._train = False
 
-    #   Calls the helper function to save the q-table after training
     def save_model(self):
+        """ Save the q-table after training """
         helper.save(self.Q)
 
-    #   Calls the helper function to load the q-table when testing
     def load_model(self):
+        """ Calls the helper function to load the q-table when testing """
         self.Q = helper.load()
 
-    #   resets the game state
     def reset(self):
+        """ Resets the game state """
         self.points = 0
         self.s = None
         self.a = None
 
-    #   This is a function you should write. 
-    #   Function Helper:IT gets the current state, and based on the 
-    #   current snake head location, body and food location,
-    #   determines which move(s) it can make by also using the 
-    #   board variables to see if its near a wall or if  the
-    #   moves it can make lead it into the snake body and so on. 
-    #   This can return a list of variables that help you keep track of
-    #   conditions mentioned above.
-    def helper_func(self, state):
+    #   THIS IS FUNCTION YOU NEED TO WRITE
+    def helper_func(self, state: List) -> List:
+        """
+        Function Helper: It gets the current state, and based on the
+        current snake head location, body, and food location,
+        determines which move(s) it can make by also using the
+        board variables to see if it's near a wall or if the
+        moves it can make lead it into the snake body, and so on.
+        This can return a list of variables that help you keep track of
+        conditions mentioned above.
+        """
         print("IN helper_func")
         # YOUR CODE HERE
         # YOUR CODE HERE
@@ -67,8 +74,8 @@ class SnakeAgent:
         # YOUR CODE HERE
 
 
-    # Computing the reward, need not be changed.
-    def compute_reward(self, points, dead):
+    def compute_reward(self, points: int, dead: bool):
+        """ Computing the reward, need not be changed. """
         if dead:
             return -1
         elif points > self.points:
@@ -76,27 +83,29 @@ class SnakeAgent:
         else:
             return -0.1
 
-    #   This is the code you need to write. 
-    #   This is the reinforcement learning agent
-    #   use the helper_func you need to write above to
-    #   decide which move is the best move that the snake needs to make 
-    #   using the compute reward function defined above. 
-    #   This function also keeps track of the fact that we are in 
-    #   training state or testing state so that it can decide if it needs
-    #   to update the Q variable. It can use the N variable to test outcomes
-    #   of possible moves it can make. 
-    #   the LPC variable can be used to determine the learning rate (lr), but if 
-    #   you're stuck on how to do this, just use a learning rate of 0.7 first,
-    #   get your code to work then work on this.
-    #   gamma is another useful parameter to determine the learning rate.
-    #   based on the lr, reward, and gamma values you can update the q-table.
-    #   If you're not in training mode, use the q-table loaded (already done)
-    #   to make moves based on that.
-    #   the only thing this function should return is the best action to take
-    #   ie. (0 or 1 or 2 or 3) respectively. 
-    #   The parameters defined should be enough. If you want to describe more elaborate
-    #   states as mentioned in helper_func, use the state variable to contain all that.
-    def agent_action(self, state, points, dead):
+    #   THIS IS FUNCTION YOU NEED TO WRITE
+    def agent_action(self, state: List, points: int, dead: bool) -> int:
+        """
+        This is the reinforcement learning agent.
+        Use the helper_func you need to write above to
+        decide which move is the best move that the snake needs to make
+        using the compute_reward function defined above.
+        This function also keeps track of the fact that we are in
+        training state or testing state so that it can decide if it needs
+        to update the Q variable. It can use the N variable to test outcomes
+        of possible moves it can make.
+        The LPC variable can be used to determine the learning rate (lr), but if
+        you're stuck on how to do this, just use a learning rate of 0.7 first,
+        get your code to work then work on this.
+        Gamma is another useful parameter to determine the learning rate.
+        Based on the lr, reward, and gamma values you can update the Q-table.
+        If you're not in training mode, use the Q-table loaded (already done)
+        to make moves based on that.
+        The only thing this function should return is the best action to take
+        i.e., (0 or 1 or 2 or 3) respectively.
+        The parameters defined should be enough. If you want to describe more elaborate
+        states as mentioned in helper_func, use the state variable to contain all that.
+        """
         print("IN AGENT_ACTION")
         # YOUR CODE HERE
         # YOUR CODE HERE
