@@ -1,6 +1,12 @@
 import numpy as np
 import argparse
 
+#   The corresponding integer values for the actions (directions)
+UP = 0
+DOWN = 1
+LEFT = 2
+RIGHT = 3
+
 #   Here we define some variables to determine the board size
 DISPLAY_SIZE = 560
 GRID_SIZE = 40
@@ -45,12 +51,12 @@ food_y = 120
 MODEL_SAVE_FILE = 'model.npy'
 
 
-def np_error_checker(arr):
+def np_error_checker(arr: np.ndarray):
     """
-        Checks if the Q array we created is in the proper format.
-        It doesn't check the values in the array, rather it only checks if the array has the
-        correct internal parts based on which it returns true or false.
-        This function is useful to make sure the Q array isn't corrupted when saving and loading.
+    Checks if the Q array we created is in the proper format.
+    It doesn't check the values in the array, rather it only checks if the array has the
+    correct internal parts based on which it returns true or false.
+    This function is useful to make sure the Q array isn't corrupted when saving and loading.
     """
     if (type(arr) is np.ndarray and
         arr.shape==(NUM_ADJOINING_WALL_X_STATES, NUM_ADJOINING_WALL_Y_STATES, NUM_FOOD_DIR_X, NUM_FOOD_DIR_Y,
@@ -63,16 +69,16 @@ def np_error_checker(arr):
 
 def initialize_q_as_zeros():
     """
-        This function initializes all the values to zero.
-        We use numpy arrays to store all this information.
-        We use the zeros function from numpy to initialize the values.
+    This function initializes all the values to zero.
+    We use numpy arrays to store all this information.
+    We use the zeros function from numpy to initialize the values.
     """
     return np.zeros((NUM_ADJOINING_WALL_X_STATES, NUM_ADJOINING_WALL_Y_STATES, NUM_FOOD_DIR_X, NUM_FOOD_DIR_Y,
                      NUM_ADJOINING_BODY_TOP_STATES, NUM_ADJOINING_BODY_BOTTOM_STATES, NUM_ADJOINING_BODY_LEFT_STATES,
                      NUM_ADJOINING_BODY_RIGHT_STATES, NUM_ACTIONS))
 
 
-def save(arr):
+def save(arr: np.ndarray):
     """ Verify the format of the given Q array and save it. """
     if np_error_checker(arr):
         np.save(MODEL_SAVE_FILE, arr)

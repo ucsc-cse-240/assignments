@@ -9,19 +9,19 @@ import time
 
 class SnakeGame:
     """
-        This is the SnakeGame class you'll be working with.
-        It first initializes based on the default conditions.
-        Then it trains according to the number of training steps printing the stats along the way.
-        Then it tests using the training set and again prints the points along the way.
-        Then it calls the show_games function which also based on the parameters,
-        shows a number of games being played based on the training done.
+    This is the SnakeGame class you'll be working with.
+    It first initializes based on the default conditions.
+    Then it trains according to the number of training steps printing the stats along the way.
+    Then it tests using the training set and again prints the points along the way.
+    Then it calls the show_games function which also based on the parameters,
+    shows a number of games being played based on the training done.
     """
 
     def __init__(self, args):
         """
-            This constructor initializes the board according to the conditions
-            mentioned in the helper file.
-            It sets the board and initializes the snake agent.
+        This constructor initializes the board according to the conditions
+        mentioned in the helper file.
+        It sets the board and initializes the snake agent.
         """
         self.args = args
         self.env = BoardEnv(args.snake_head_x, args.snake_head_y, args.food_x, args.food_y)
@@ -29,8 +29,8 @@ class SnakeGame:
 
     def play(self):
         """
-            Does the necessary function calls to do_training() (if necessary),
-            then the do_testing(), then show_games().
+        Does the necessary function calls to do_training() (if necessary),
+        then the do_testing(), then show_games().
         """
         if self.args.NUM_TRAIN_ITER != 0:
             self.do_training()
@@ -39,8 +39,8 @@ class SnakeGame:
 
     def do_training(self):
         """
-            Calls the functions to do reinforcement training as many times as specified.
-            It also prints the statistics based on the parameter specified.
+        Calls the functions to do reinforcement training as many times as specified.
+        It also prints the statistics based on the parameter specified.
         """
         print("IN TRAINING PHASE: ")
         self.agent.set_train()
@@ -77,9 +77,9 @@ class SnakeGame:
     #
     def do_testing(self):
         """
-            This function will test based on the model you created.
-            It first reads the "model.npy" file created above and makes
-            moves based on the trained model.
+        This function will test based on the model you created.
+        It first reads the "model.npy" file created above and makes
+        moves based on the trained model.
         """
         print("Test Phase:")
         self.agent.set_eval()
@@ -110,9 +110,9 @@ class SnakeGame:
 
     def show_games(self):
         """
-            This function is the one where the game will be displayed.
-            This function is already written for you. No changes are necessary
-            as long as YOU don't change function names or parameters.
+        This function is the one where the game will be displayed.
+        This function is already written for you. No changes are necessary
+        as long as YOU don't change function names or parameters.
         """
         print("Display Games")
         self.env.display()

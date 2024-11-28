@@ -1,6 +1,7 @@
 import random
 import pygame
 import helper
+from typing import List
 
 
 class BoardEnv:
@@ -11,7 +12,12 @@ class BoardEnv:
     Keeps track of the board and the snake.
     """
 
-    def __init__(self, snake_head_x, snake_head_y, food_x, food_y):
+    def __init__(self,
+                snake_head_x: int,
+                snake_head_y: int,
+                food_x: int,
+                food_y: int
+            ):
         """
         This is the constructor, it initializes game variables including the current
         snake location and food location.
@@ -38,21 +44,21 @@ class BoardEnv:
         """ * Returns the current state of the game """
         return self.game.get_state()
 
-    def step(self, action):
+    def step(self, action: int):
         """ * Given an action, does the action and returns the next state """
         state, points, dead = self.game.step(action)
         if self.show:
             self.draw(state, points, dead)
         return state, points, dead
 
-    def draw(self, state, points, dead):
+    def draw(self, state: List, points: int, dead: bool):
         """
         Helper function to draw the different parts of the snake game.
         Uses the pygame module to easily draw the board, snake, and food.
         """
         snake_head_x, snake_head_y, snake_body, food_x, food_y = state
         self.display.fill(helper.BLUE)
-        pygame.draw.rect( self.display, helper.BLACK,
+        pygame.draw.rect(self.display, helper.BLACK,
                 [
                     helper.GRID_SIZE,
                     helper.GRID_SIZE,
@@ -133,7 +139,12 @@ class Snake:
     Most of these functions are called by the BoardEnv class.
     """
 
-    def __init__(self, snake_head_x, snake_head_y, food_x, food_y):
+    def __init__(self,
+                snake_head_x: int,
+                snake_head_y: int,
+                food_x: int,
+                food_y: int
+            ):
         """ Constructor used to initialize the Snake and food at some positions passed to it. """
         self.init_snake_head_x = snake_head_x
         self.init_snake_head_y = snake_head_y
@@ -160,7 +171,7 @@ class Snake:
         """ Return the actions that the snake can make \n
             0 -> up, 1 -> down, 2 -> left, 3 -> right
         """
-        return [0, 1, 2, 3]
+        return [helper.UP, helper.DOWN, helper.LEFT, helper.RIGHT]
 
     def get_state(self):
         """ Returns the current positions and how long the snake is """
@@ -172,7 +183,7 @@ class Snake:
             self.food_y
         ]
 
-    def move(self, action):
+    def move(self, action: int):
         """
         Makes the move depending on the action passed to it.
         It also handles the case where the snake eats food and new food needs to be generated.
@@ -225,18 +236,18 @@ class Snake:
 
         return False
 
-    def step(self, action):
+    def step(self, action: int):
         """
-            Do a step, given an action.
-            Returns the next state, points, and if it is dead.
+        Do a step, given an action.
+        Returns the next state, points, and if it is dead.
         """
         is_dead = self.move(action)
         return self.get_state(), self.get_points(), is_dead
 
     def handle_eatfood(self):
         """
-            Increments the total points if the snake ate the food
-            and creates another food for the snake.
+        Increments the total points if the snake ate the food
+        and creates another food for the snake.
         """
         if (self.snake_head_x == self.food_x) and (self.snake_head_y == self.food_y):
             self.random_food()
@@ -245,8 +256,8 @@ class Snake:
 
     def random_food(self):
         """
-            Creates food at a random location and makes sure it isn't
-            at a location the snake is already at.
+        Creates food at a random location and makes sure it isn't
+        at a location the snake is already at.
         """
         max_x = (helper.DISPLAY_SIZE - helper.WALL_SIZE - helper.GRID_SIZE)
         max_y = (helper.DISPLAY_SIZE - helper.WALL_SIZE - helper.GRID_SIZE)
