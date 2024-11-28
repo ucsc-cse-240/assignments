@@ -45,55 +45,58 @@ food_y = 120
 MODEL_SAVE_FILE = 'model.npy'
 
 
-#   Here we define a function that checks if the Q array we created is in the proper format
-#   It doesn't check the values in the array, rather it only checks if the array has the
-#   correct internal parts based on which it returns true or false
-#   This function is useful to make sure the Q array isn't curropted when saving and loading
 def np_error_checker(arr):
-	if (type(arr) is np.ndarray and 
-		arr.shape==(NUM_ADJOINING_WALL_X_STATES, NUM_ADJOINING_WALL_Y_STATES, NUM_FOOD_DIR_X, NUM_FOOD_DIR_Y,
-					 NUM_ADJOINING_BODY_TOP_STATES, NUM_ADJOINING_BODY_BOTTOM_STATES, NUM_ADJOINING_BODY_LEFT_STATES,
-					 NUM_ADJOINING_BODY_RIGHT_STATES,NUM_ACTIONS)):
-		return True
-	else:
-		return False
+    """
+        Checks if the Q array we created is in the proper format.
+        It doesn't check the values in the array, rather it only checks if the array has the
+        correct internal parts based on which it returns true or false.
+        This function is useful to make sure the Q array isn't corrupted when saving and loading.
+    """
+    if (type(arr) is np.ndarray and
+        arr.shape==(NUM_ADJOINING_WALL_X_STATES, NUM_ADJOINING_WALL_Y_STATES, NUM_FOOD_DIR_X, NUM_FOOD_DIR_Y,
+                     NUM_ADJOINING_BODY_TOP_STATES, NUM_ADJOINING_BODY_BOTTOM_STATES, NUM_ADJOINING_BODY_LEFT_STATES,
+                     NUM_ADJOINING_BODY_RIGHT_STATES,NUM_ACTIONS)):
+        return True
+    else:
+        return False
 
 
-#   This function defines all the values to zero
-#   We use numpy arrays to store all this information
-#   We use the zeros function from numpy to initialize the values
 def initialize_q_as_zeros():
-	return np.zeros((NUM_ADJOINING_WALL_X_STATES, NUM_ADJOINING_WALL_Y_STATES, NUM_FOOD_DIR_X, NUM_FOOD_DIR_Y,
-					 NUM_ADJOINING_BODY_TOP_STATES, NUM_ADJOINING_BODY_BOTTOM_STATES, NUM_ADJOINING_BODY_LEFT_STATES,
-					 NUM_ADJOINING_BODY_RIGHT_STATES, NUM_ACTIONS))
+    """
+        This function initializes all the values to zero.
+        We use numpy arrays to store all this information.
+        We use the zeros function from numpy to initialize the values.
+    """
+    return np.zeros((NUM_ADJOINING_WALL_X_STATES, NUM_ADJOINING_WALL_Y_STATES, NUM_FOOD_DIR_X, NUM_FOOD_DIR_Y,
+                     NUM_ADJOINING_BODY_TOP_STATES, NUM_ADJOINING_BODY_BOTTOM_STATES, NUM_ADJOINING_BODY_LEFT_STATES,
+                     NUM_ADJOINING_BODY_RIGHT_STATES, NUM_ACTIONS))
 
 
-#   Here we define a function to save the Q array that is passed to it. We run a quick check 
-#   to verify the format before saving   
 def save(arr):
-	if np_error_checker(arr):
-		np.save(MODEL_SAVE_FILE,arr)
-		return True
-	else:
-		print("\t********UNABLE TO SAVE MODEL AS FILE********")
-		return False
+    """ Verify the format of the given Q array and save it. """
+    if np_error_checker(arr):
+        np.save(MODEL_SAVE_FILE, arr)
+        return True
+    else:
+        print("\t********UNABLE TO SAVE MODEL AS FILE********")
+        return False
 
 
-#   Here we define a function to load Q array. We again run a quick formt check after loading
 def load():
-	try:
-		arr = np.load(MODEL_SAVE_FILE)
-		if np_error_checker(arr):
-			print("\t********MODEL IN " + MODEL_SAVE_FILE + " LOADED")
-			return arr
-		return None
-	except:
-		print("\t********MODEL FILE NAMED " + MODEL_SAVE_FILE + "NOT FOUND")
-		return None
+    """ Load Q array and verify the format. """
+    try:
+        arr = np.load(MODEL_SAVE_FILE)
+        if np_error_checker(arr):
+            print("\t********MODEL IN " + MODEL_SAVE_FILE + " LOADED")
+            return arr
+        return None
+    except:
+        print("\t********MODEL FILE NAMED " + MODEL_SAVE_FILE + "NOT FOUND")
+        return None
 
 
-#   This function lets us create a bunch of arguements to pass so we can change initial game state
 def make_args():
+    """ Create a bunch of arguments to pass so we can change the initial game state. """
 
     #   Name for program
     parser = argparse.ArgumentParser(description='CSE 140 Summer 21 Assignment 5')
@@ -112,10 +115,10 @@ def make_args():
     #   Exploration parameter
     parser.add_argument('--Ne', dest="Ne", type=int, default=40,
                         help='Parameter to help with next state exploration; set by default as Ne=40')
-    #   Parameter to calculate learning ragte
+    #   Parameter to calculate learning rate
     parser.add_argument('--LPC', dest="LPC", type=int, default=40,
                         help='Parameter to determine learning parameter during reinforcement learning; by default LPC=40')
-    #   Parameter to calculate learning rage
+    #   Parameter to calculate learning rate
     parser.add_argument('--gamma', dest="gamma", type=float, default=0.7,
                         help='Parameter used in reinforcement learning; by default gamma=0.7')
     #   Starting X position of snake
@@ -130,7 +133,7 @@ def make_args():
     #   starting Y position of food
     parser.add_argument('--INIT_FOOD_Y', dest="food_y", type=int, default=120,
                         help='Initial Y coordinate position of the food; by default food_y=120')
-    #   Parse everything mentnoned above into args
+    #   Parse everything mentioned above into args
     args = parser.parse_args()
     #   return args
     return args
