@@ -6,6 +6,14 @@ These are the assignments for CSE240 at UCSC.  They are:
 - [Assignment4](Assignment4/)
 - [Assignment5](Assignment5/)
   
+# Install the requirements
+You will install the requirements listed in the repository's
+[requirements.txt](requirements.txt) file.  To install these packages,
+you will run the command:
+```sh
+pip3 install -r requirements.txt
+```
+
 # Installing the Autograder package
 Install the autograder with `pip3 install autograder-py` on the command line.  
 

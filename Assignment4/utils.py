@@ -1,6 +1,7 @@
-# Adapted from MIT 6.034 Lab 4: Rule-Based Systems
+# MIT 6.034 Lab 4: Rule-Based Systems
 
 from collections.abc import MutableMapping as DictMixin
+#from collections import MutableMapping as DictMixin
 import re
 
 class ClobberedDictKey(Exception):
